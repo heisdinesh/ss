@@ -1,16 +1,35 @@
 import React from 'react'
-import {useState} from "react"
+import {useState,useContext} from "react"
+import {GameContext} from "../context/GameContext"
+
 import {useNavigate, Link} from "react-router-dom"
+import Axios from "axios"
 
 function Home() {
-    const [pin,setPin] =useState('')
+    const url ="http://localhost:4000/player/play/start"
+    const data = useContext(GameContext)
+     const [pin,setPin] =useState('')
     const navigate=useNavigate()
-    const handleSubmit=(event)=>{
+
+    const handleSubmit=async (event)=>{
         event.preventDefault();
-        alert(`ur pin is ${pin}`)
-        if(5<6){
-            navigate("/join")
-        }
+    await Axios.post(url,pin)
+        .then((res)=>{
+            
+            if(res.data){
+                console.log(res.data)
+                data.setGuuid(res.game_id)
+            }
+        })
+        .then(()=>{
+            
+                navigate("/join")
+            
+        })
+        .catch((error)=>console.log(error))
+        // console.log(input)
+         
+        
     }
   return (
     <div className="bg-slate-900 min-h-screen flex flex-col items-center justify-center">

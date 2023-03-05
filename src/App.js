@@ -1,9 +1,12 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { Participant, Profile , Firstpage,Wrong,Exit,Correct,Rankings,Pingen,Library,Question} from './components';
 import {Home,Creator,Game,Join,Instructions, GetReady, Login} from "./pages"
+import { GameProvider } from "./context/GameContext";
+
 function App() {
   return (
     <div className="App">
+     <GameProvider>
      <Router>
         <Routes>
           <Route path="/" element={<Home />}/>
@@ -25,6 +28,7 @@ function App() {
         <Route path="/Question" element={<Question/>}/>
         </Routes>
      </Router>
+     </GameProvider>
     </div>
   );
 }
